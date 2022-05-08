@@ -9,7 +9,7 @@
 
 		shell_exec('"C:\\Program Files (x86)\\Tesseract-OCR\\tesseract" "\\images\\'.$file_name.'" out');
 
-		echo "<br><h3>OCR after reading</h3><br><pre>";
+		echo "<br><h3>Text after reading from Image</h3><br><pre>";
 
 		$myfile = fopen("out.txt", "r") or die("Unable to open file!");
 		echo fread($myfile,filesize("out.txt"));
