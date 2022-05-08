@@ -23,7 +23,7 @@
 			</script>
 			<script>
 							function runOCR(url) {
-    									 Tesseract.recognize(url,'eng','https://cdn.rawgit.com/naptha/tessdata/gh-pages/3.02/eng.traineddata.gz')
+    									 Tesseract.recognize(url,lang ='eng','https://cdn.rawgit.com/naptha/tessdata/gh-pages/3.02/eng.traineddata.gz')
        							  .then(function(result) {
           						  document.getElementById("ocr_results")
                    		 .innerText = result.text.toLowerCase();
