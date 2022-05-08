@@ -1,44 +1,39 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <script src='https://unpkg.com/tesseract.js@2.0.0-alpha.4/dist/tesseract.min.js'></script>
-    </head>
-    <body>
-        <input type="file" id="file">
-        <input type="button" id="go_button" value="Run" />
-        <output id="list"></output>
-        <div id="ocr_results"> </div>
-        <div id="ocr_status"> </div>
+  <head>
+    <meta charset='utf-8'>
+    <title>Image to Text</title>
 
-        <script>
-            var MICR_CHARACTERS = '0123456789abcd';
+<script src='https://unpkg.com/tesseract.js@2.1.5/dist/tesseract.min.js'></script>
+</head>
+  <body>
+ 
+		<h3>Image to Text</h3>
+		<input type="text" id="url" placeholder="Image URL" />
+		<input type="button" id="go_button" value="Run" />
+		<div id="ocr_results"> </div>
+		<div id="ocr_status"> </div>
+<script>
+document.getElementById("go_button")
+        .addEventListener("click", function(e) {
+            var url = document.getElementById("url").value;
+            runOCR(url);
+        });
+</script>
+<script>
+	function runOCR(url) {
+    Tesseract.recognize(url,'eng')
+         .then(function(result) {
+            document.getElementById("ocr_results")
+                    .innerText = result.text.toLowerCase();
+         }).progress(function(result) {
+            document.getElementById("ocr_status")
+                    .innerText = result["status"] + " (" +
+                        (result["progress"] * 100) + "%)";
+        });
+}
+</script>
 
-            const { TesseractWorker } = Tesseract;
-            const worker = new TesseractWorker({
-                langPath: "./tessdata/",
-                tessedit_debug_fonts: 1,
-                tessedit_char_whitelist: MICR_CHARACTERS, });
 
-            function handleFileSelect(evt) {
-                var files = evt.target.files; // FileList object
-
-                // files is a FileList of File objects. List some properties.
-                var output = [];
-                for (var i = 0, f; f = files[i]; i++) {
-                    worker.recognize(f, "ara", {
-                        langPath: "./tessdata/",
-                        tessedit_debug_fonts: 1,
-                        tessedit_char_whitelist: MICR_CHARACTERS,
-                    }).then(function(result) {
-                        document.getElementById("ocr_results").innerText = result.text;
-                    }).progress(function(result) {
-                        document.getElementById("ocr_status").innerText = result["status"] + " (" + (result["progress"] * 100) + "%)";
-                    });
-                }
-            }
-
-            document.getElementById('file').addEventListener('change', handleFileSelect, false);
-        </script>
-    </body>
+	</body>
 </html>
