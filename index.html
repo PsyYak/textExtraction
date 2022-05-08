@@ -8,28 +8,27 @@
 </head>
   <body>
  
+  <center>
 		<h3>Image to Text</h3>
 		<input type="text" id="url" placeholder="Image URL" />
 		<input type="button" id="go_button" value="Run" />
 		<div id="ocr_results"> </div>
 		<div id="ocr_status"> </div>
-<script>
-document.getElementById("go_button")
-        .addEventListener("click", function(e) {
-            var url = document.getElementById("url").value;
-            runOCR(url);
-        });
-</script>
-<script>
-	function runOCR(url) {
-    Tesseract.recognize(url,'eng')
-         .then(function(result) {
-            document.getElementById("ocr_results")
-                    .innerText = result.text.toLowerCase();
-         }).progress(function(result) {
-            document.getElementById("ocr_status")
-                    .innerText = result["status"] + " (" +
-                        (result["progress"] * 100) + "%)";
+	</center>
+			<script>
+							document.getElementById("go_button").addEventListener("click", function(e) {
+            	var url = document.getElementById("url").value;
+           		runOCR(url);
+       			  });
+			</script>
+			<script>
+							function runOCR(url) {
+    									 Tesseract.recognize(url,'eng','https://cdn.rawgit.com/naptha/tessdata/gh-pages/3.02/eng.traineddata.gz')
+       							  .then(function(result) {
+          						  document.getElementById("ocr_results")
+                   		 .innerText = result.text.toLowerCase();
+       					}).progress(function(result) {
+            				document.getElementById("ocr_status").innerText = result["status"] + " (" + (result["progress"] * 100) + "%)";
         });
 }
 </script>
