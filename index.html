@@ -28,7 +28,7 @@ document.getElementById("go_button")
     Tesseract.recognize(url)
          .then(function(result) {
             document.getElementById("ocr_results")
-                    .innerText = result.text;
+                    .innerText = result.text.toLowerCase();
          }).progress(function(result) {
             document.getElementById("ocr_status")
                     .innerText = result["status"] + " (" +
